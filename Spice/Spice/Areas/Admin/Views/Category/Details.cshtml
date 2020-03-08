@@ -1,0 +1,37 @@
+﻿@model Spice.Models.Category
+
+@{
+    ViewData["Title"] = "View Category";
+}
+
+<br />
+<h2>View Category</h2>
+<br />
+
+<form method="post" asp-action="Details">
+    <div class="background-white border">
+        <div class="form-group row">
+            <div class="col-2 offset-2">
+                <label asp-for="Id" class="col-form-label font-weight-bolder"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Id" class="form-control" type="text" readonly/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-2 offset-2">
+                <label asp-for="Name" class="col-form-label font-weight-bolder"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Name" class="form-control" type="text" readonly/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 offset-4">
+                <partial name="_DetailsAndReturnButton" model="Model.Id" />
+            </div>
+
+        </div>
+    </div>
+</form>
+

@@ -1,0 +1,31 @@
+﻿@model Spice.Models.Category
+
+@{
+    ViewData["Title"] = "Delete Category";
+}
+
+<br />
+<h2>Delete Category</h2>
+<br />
+
+<form method="post" asp-action="Delete">
+    <div class="background-white border">
+        <div class="form-group row">
+            <div class="col-2 offset-2">
+                <label asp-for="Name" class="col-form-label font-weight-bolder"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Name" class="form-control" type="text" readonly/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 offset-4">
+                <partial name="_DeleteAndReturnButton" model="Model.Id" />
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+
