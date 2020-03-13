@@ -1,2 +1,2 @@
 # Restaurant
-A restaurant build in asp.net
+A restaurant built in asp.net
