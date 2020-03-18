@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="https://kit.fontawesome.com/351559b76f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tiny.cloud/1/4jok4uc8gxy97eytyxqqlhp9goq84vrea8xus3cnm2mo4vji/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <body class="search-background">
     <header>
@@ -27,7 +28,7 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropDownMenuLink">
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Category</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="SubCategory" asp-action="Index">Sub Category</a>
-                                <a class="dropdown-item">Menu Item</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="MenuItem" asp-action="Index">Menu Item</a>
                                 <a class="dropdown-item">Coupons</a>
                                 <a class="dropdown-item">Users</a>
                             </div>
@@ -55,6 +56,7 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)

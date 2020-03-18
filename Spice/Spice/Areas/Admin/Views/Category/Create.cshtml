@@ -3,9 +3,9 @@
     ViewData["Title"] = "Create Category";
 }
 
-<br/>
+<br />
 <h2>Create Category</h2>
-<br/>
+<br />
 
 <form method="post" asp-action="Create">
     <div class="background-white border">
@@ -21,10 +21,14 @@
         </div>
         <div class="form-group row">
             <div class="col-5 offset-4">
-               <partial name="_CreateAndReturnButton" />
+                <partial name="_CreateAndReturnButton" />
             </div>
 
         </div>
     </div>
 </form>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 
