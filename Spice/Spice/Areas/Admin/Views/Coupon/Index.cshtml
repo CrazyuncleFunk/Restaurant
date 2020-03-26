@@ -1,6 +1,6 @@
-﻿@model IEnumerable<MenuItem>
+﻿@model IEnumerable<Coupon>
 @{
-    ViewData["Title"] = "Menu Item List";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,7 @@
 <div class="border background-white">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-info">Menu Item List</h2>
+            <h2 class="text-info">Coupon List</h2>
         </div>
         <div class="col-6 text-right">
             <partial name="_CreateButtonPartial" />
@@ -22,9 +22,9 @@
             <table class="table table-striped border">
                 <tr class="table-secondary">
                     <th>@Html.DisplayNameFor(m => m.Name)</th>
-                    <th>@Html.DisplayNameFor(m => m.Price)</th>
-                    <th>@Html.DisplayNameFor(m => m.CategoryId)</th>
-                    <th>@Html.DisplayNameFor(m => m.SubCategoryId)</th>
+                    <th>@Html.DisplayNameFor(m => m.Discount)</th>
+                    <th>@Html.DisplayNameFor(m => m.MinimumAmount)</th>
+                    <th>@Html.DisplayNameFor(m => m.IsActive)</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -35,13 +35,13 @@
                     @Html.DisplayFor(m => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(m => item.Price)
+                    @Html.DisplayFor(m => item.Discount)
                 </td>
                 <td>
-                    @Html.DisplayFor(m => item.Category.Name)
+                    @Html.DisplayFor(m => item.MinimumAmount)
                 </td>
                 <td>
-                    @Html.DisplayFor(m => item.SubCategory.Name)
+                    @Html.DisplayFor(m => item.IsActive)
                 </td>
                 <td>
                     <partial name="_TableButtonsPartial" model="item.Id" />
@@ -52,7 +52,7 @@
         }
         else
         {
-            <p>No Menu Item Exist...</p>
+            <p>No Coupons Exist...</p>
         }
     </div>
 </div>
