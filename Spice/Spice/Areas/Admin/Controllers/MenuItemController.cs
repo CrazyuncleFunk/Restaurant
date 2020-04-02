@@ -70,7 +70,7 @@ namespace Spice.Areas.Admin.Controllers
             else
             {
                 var uploads = Path.Combine(webRoutePath, @"images/"+SD.DefaultFoodImage);
-                System.IO.File.Copy(uploads,webRoutePath + @"/images/" + MenuItemVM.MenuItem.Id + ".png");
+                System.IO.File.Copy(uploads, webRoutePath + @"/images/" + MenuItemVM.MenuItem.Id + ".png");
                 menuItemFromDb.Image = @"/images/" + MenuItemVM.MenuItem.Id + ".png";
             }
             await _db.SaveChangesAsync();
