@@ -16,13 +16,13 @@ namespace Spice.Areas.Admin.Controllers
     public class MenuItemController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly IWebHostEnvironment _hostingEnviroment;
+        private readonly IWebHostEnvironment _hostingEvironment;
         [BindProperty]
         public MenuItemViewModel MenuItemVM { get; set; }
-        public MenuItemController(ApplicationDbContext db, IWebHostEnvironment hostingEnviroment)
+        public MenuItemController(ApplicationDbContext db, IWebHostEnvironment hostingEnvironment)
         {
             _db = db;
-            _hostingEnviroment = hostingEnviroment;
+            _hostingEvironment = hostingEnvironment;
             MenuItemVM = new MenuItemViewModel
             {
                 Category = _db.Category,
@@ -43,9 +43,10 @@ namespace Spice.Areas.Admin.Controllers
         //POST - CREATE
         [HttpPost, ActionName("Create")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreatePost()
+        public async Task<IActionResult> CreatePOST()
         {
             MenuItemVM.MenuItem.SubCategoryId = Convert.ToInt32(Request.Form["SubCategoryId"].ToString());
+
             if (!ModelState.IsValid)
             {
                 return View(MenuItemVM);
@@ -53,27 +54,36 @@ namespace Spice.Areas.Admin.Controllers
 
             _db.MenuItem.Add(MenuItemVM.MenuItem);
             await _db.SaveChangesAsync();
-            //Images
-            string webRoutePath = _hostingEnviroment.WebRootPath;
-            var file = HttpContext.Request.Form.Files;
+
+            //Work on the image saving section
+
+            string webRootPath = _hostingEvironment.WebRootPath;
+            var files = HttpContext.Request.Form.Files;
+
             var menuItemFromDb = await _db.MenuItem.FindAsync(MenuItemVM.MenuItem.Id);
-            if(file.Count > 0)
+
+            if (files.Count > 0)
             {
-                var uploads = Path.Combine(webRoutePath, "images");
-                var extention = Path.GetExtension(file[0].FileName);
-                using (var fileStream = new FileStream(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extention), FileMode.Create))
+                //files has been uploaded
+                var uploads = Path.Combine(webRootPath, "images");
+                var extension = Path.GetExtension(files[0].FileName);
+
+                using (var filesStream = new FileStream(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extension), FileMode.Create))
                 {
-                    file[0].CopyTo(fileStream);
+                    files[0].CopyTo(filesStream);
                 }
-                menuItemFromDb.Image = @"/images/"+ MenuItemVM.MenuItem.Id + extention;
+                menuItemFromDb.Image = @"\images\" + MenuItemVM.MenuItem.Id + extension;
             }
             else
             {
-                var uploads = Path.Combine(webRoutePath, @"images/"+SD.DefaultFoodImage);
-                System.IO.File.Copy(uploads, webRoutePath + @"/images/" + MenuItemVM.MenuItem.Id + ".png");
-                menuItemFromDb.Image = @"/images/" + MenuItemVM.MenuItem.Id + ".png";
+                //no file was uploaded, so use default
+                var uploads = Path.Combine(webRootPath, @"images\" + SD.DefaultFoodImage);
+                System.IO.File.Copy(uploads, webRootPath + @"\images\" + MenuItemVM.MenuItem.Id + ".png");
+                menuItemFromDb.Image = @"\images\" + MenuItemVM.MenuItem.Id + ".png";
             }
+
             await _db.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
         //GET - EDIT
@@ -103,7 +113,7 @@ namespace Spice.Areas.Admin.Controllers
                 return View(MenuItemVM);
             }
             //Images
-            string webRoutePath = _hostingEnviroment.WebRootPath;
+            string webRoutePath = _hostingEvironment.WebRootPath;
             var file = HttpContext.Request.Form.Files;
             var menuItemFromDb = await _db.MenuItem.FindAsync(MenuItemVM.MenuItem.Id);
             if (file.Count > 0)
@@ -179,7 +189,7 @@ namespace Spice.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            string webRoutePath = _hostingEnviroment.WebRootPath;
+            string webRoutePath = _hostingEvironment.WebRootPath;
             var file = HttpContext.Request.Form.Files;
             var menuItemFromDb = await _db.MenuItem.FindAsync(MenuItemVM.MenuItem.Id);
             if (file.Count > 0)
