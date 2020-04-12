@@ -38,6 +38,16 @@ namespace Spice.Controllers
             };
             return View(IndexVM);
         }
+        public async Task<IActionResult> Details(int id)
+        {
+            var menuItemFromDb = await _db.MenuItem.Include(i => i.Category).Include(i => i.SubCategory).Where(i => i.Id == id).FirstOrDefaultAsync();
+            ShoppingCart shoppingCart = new ShoppingCart()
+            {
+                MenuItem = menuItemFromDb,
+                MenuItemId = menuItemFromDb.Id
+            };
+            return View(shoppingCart);
+        }
 
         public IActionResult Privacy()
         {
