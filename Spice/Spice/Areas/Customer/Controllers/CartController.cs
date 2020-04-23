@@ -11,6 +11,7 @@ using Spice.Utility;
 
 namespace Spice.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -42,7 +43,15 @@ namespace Spice.Areas.Customer.Controllers
             {
                 list.MenuItem = await _db.MenuItem.FirstOrDefaultAsync();
                 detailCart.OrderHeader.OrderTotal = detailCart.OrderHeader.OrderTotal + (list.Count * list.MenuItem.Price);
-                list.MenuItem.Description = SD.ConvertToRawHtml(list.MenuItem.Description);
+                if(list.MenuItem.Description != null) 
+                {
+                    list.MenuItem.Description = SD.ConvertToRawHtml(list.MenuItem.Description);
+                }
+                else
+                {
+                    list.MenuItem.Description = "No Description Added";
+                }
+                
                 if(list.MenuItem.Description.Length > 100)
                 {
                     list.MenuItem.Description = list.MenuItem.Description.Substring(0, 99) + "...";
