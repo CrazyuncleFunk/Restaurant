@@ -115,21 +115,23 @@ namespace Spice.Areas.Admin.Controllers
                 return View(MenuItemVM);
             }
             //Images
-            string webRoutePath = _hostingEvironment.WebRootPath;
+            string webRootPath = _hostingEvironment.WebRootPath;
             var file = HttpContext.Request.Form.Files;
             var menuItemFromDb = await _db.MenuItem.FindAsync(MenuItemVM.MenuItem.Id);
             if (file.Count > 0)
             {
                 //NEW IMAGE UPLOADED
-                var uploads = Path.Combine(webRoutePath, "images");
+                var uploads = Path.Combine(webRootPath, "images");
                 var extention_new = Path.GetExtension(file[0].FileName);
 
-                //DELETE OLD IMAGE
-                var imagePath = Path.Combine(webRoutePath, menuItemFromDb.Image.TrimStart('\\'));
-                if (System.IO.File.Exists(imagePath))
-                {
-                    System.IO.File.Delete(imagePath);
-                }
+                ////DELETE OLD IMAGE
+                //var imagePath = Path.Combine(webRootPath, menuItemFromDb.Image.TrimStart('\\'));
+
+                //if (System.IO.File.Exists(imagePath))
+                //{
+                //    System.IO.File.Delete(imagePath);
+                //}
+
                 //UPLOAD NEW FILE
                 using (var fileStream = new FileStream(Path.Combine(uploads, MenuItemVM.MenuItem.Id + extention_new), FileMode.Create))
                 {

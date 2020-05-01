@@ -41,6 +41,7 @@ namespace Spice.Areas.Customer.Controllers
             {
                 detailCart.listCart = cart.ToList();
             }
+            
             foreach(var list in detailCart.listCart)
             {
                 list.MenuItem = await _db.MenuItem.FirstOrDefaultAsync(m => m.Id == list.MenuItemId);
