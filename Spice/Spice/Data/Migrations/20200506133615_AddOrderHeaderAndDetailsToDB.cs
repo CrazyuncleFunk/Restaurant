@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace Spice.Data.Migrations
 {
-    public partial class AddOrderHeaderAndDetails : Migration
+    public partial class AddOrderHeaderAndDetailsToDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

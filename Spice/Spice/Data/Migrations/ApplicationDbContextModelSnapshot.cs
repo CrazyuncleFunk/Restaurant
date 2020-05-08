@@ -372,11 +372,11 @@ namespace Spice.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("PickUpTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("PickupName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("PickupTime")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");

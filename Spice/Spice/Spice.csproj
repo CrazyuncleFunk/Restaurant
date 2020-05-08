@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-Spice-A9E710E8-AAEF-4A7E-B35F-14216C4DBA70</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200416140528_AddOrderHeaderAndDetails.cs" />
+    <Compile Remove="Data\Migrations\20200416140528_AddOrderHeaderAndDetails.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.3" />
