@@ -10,6 +10,11 @@ namespace Spice.Utility
     {
         public const string DefaultFoodImage = "default_food.png";
 
+        public const string OrderPlaced = "OrderPlaced.png";
+        public const string InKitchen = "InKitchen.png";
+        public const string ReadyForPickup = "ReadyForPickup.png";
+        public const string Completed = "Completed.png";
+
         public const string ManagerUser = "Manager";
         public const string KitchenUser = "Kitchen";
         public const string FrontDeskUser = "FrontDesk";

@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 
 namespace Spice.TagHelpers
 {
-    [HtmlTargetElement("div",Attributes = "page-model")]
-    public class PageLinkTagHelper: TagHelper
+    [HtmlTargetElement("divi", Attributes = "page-model")]
+    public class PageLinkTagHelper : TagHelper
     {
         private IUrlHelperFactory urlHelperFactory;
+
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
             urlHelperFactory = helperFactory;
@@ -36,7 +37,7 @@ namespace Spice.TagHelpers
             IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
             TagBuilder result = new TagBuilder("div");
 
-            for (int i = 1; i <= PageModel.TotalItem; i++)
+            for (int i = 1; i <= PageModel.totalPage; i++)
             {
                 TagBuilder tag = new TagBuilder("a");
                 string url = PageModel.urlParam.Replace(":", i.ToString());
@@ -45,13 +46,14 @@ namespace Spice.TagHelpers
                 {
                     tag.AddCssClass(PageClass);
                     tag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
-
                 }
                 tag.InnerHtml.Append(i.ToString());
                 result.InnerHtml.AppendHtml(tag);
             }
+
             output.Content.AppendHtml(result.InnerHtml);
 
         }
+
     }
 }

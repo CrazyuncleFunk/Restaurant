@@ -1,0 +1,30 @@
+﻿@model Spice.Models.OrderHeader
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+    <form method="post">
+        <div class="container row border ml-1 backgroundWhiteBorder10Padding" style="width:100%">
+            <div class=" col-12">
+                @if (Model.Status == Spice.Utility.SD.StatusSubmitted)
+                {
+                    <img src="~/images/@Spice.Utility.SD.OrderPlaced" style="max-width:100%" />
+                }
+                else if (Model.Status == Spice.Utility.SD.StatusInProcess)
+                {
+                    <img src="~/images/@Spice.Utility.SD.InKitchen" style="max-width:100%" />
+
+                }
+                else if (Model.Status == Spice.Utility.SD.StatusReady)
+                {
+                    <img src="~/images/@Spice.Utility.SD.ReadyForPickup" style="max-width:100%" />
+
+                }
+                else
+                {
+                    <img src="~/images/@Spice.Utility.SD.Completed" style="max-width:100%" />
+
+                }
+                
+            </div>
+        </div>
+    </form>

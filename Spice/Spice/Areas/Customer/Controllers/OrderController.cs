@@ -16,7 +16,7 @@ namespace Spice.Areas.Customer.Controllers
     public class OrderController : Controller
     {
         private ApplicationDbContext _db;
-
+        private int PageSize = 12;
         public OrderController(ApplicationDbContext db)
         {
             _db = db;
@@ -40,25 +40,47 @@ namespace Spice.Areas.Customer.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> OrderHistory()
+        public async Task<IActionResult> OrderHistory(int productPage = 1)
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
-            List<OrderDetailsViewModel> orderList = new List<OrderDetailsViewModel>();
 
-            List<OrderHeader> orderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u => u.UserId == claim.Value).ToListAsync();
-            foreach (OrderHeader item in orderHeaderList)
+            OrderListViewModel orderListVM = new OrderListViewModel()
+            {
+                Orders = new List<OrderDetailsViewModel>()
+            };
+
+
+
+            List<OrderHeader> OrderHeaderList = await _db.OrderHeader.Include(o => o.ApplicationUser).Where(u => u.UserId == claim.Value).ToListAsync();
+
+            foreach (OrderHeader item in OrderHeaderList)
             {
                 OrderDetailsViewModel individual = new OrderDetailsViewModel
                 {
                     OrderHeader = item,
                     OrderDetails = await _db.OrderDetails.Where(o => o.OrderId == item.Id).ToListAsync()
                 };
-                orderList.Add(individual);
+                orderListVM.Orders.Add(individual);
             }
-            return View(orderList);
+
+            var count = orderListVM.Orders.Count;
+            orderListVM.Orders = orderListVM.Orders.OrderByDescending(p => p.OrderHeader.Id)
+                                 .Skip((productPage - 1) * PageSize)
+                                 .Take(PageSize).ToList();
+
+            orderListVM.PagingInfo = new PagingInfo
+            {
+                CurrentPage = productPage,
+                ItemsPerPage = PageSize,
+                TotalItem = count,
+                urlParam = "/Customer/Order/OrderHistory?productPage=:"
+            };
+
+            return View(orderListVM);
         }
+
 
         public async Task<IActionResult> GetOrderDetails(int Id)
         {
@@ -70,6 +92,14 @@ namespace Spice.Areas.Customer.Controllers
             orderDetailsViewModel.OrderHeader.ApplicationUser = await _db.ApplicationUser.FirstOrDefaultAsync(u => u.Id == orderDetailsViewModel.OrderHeader.UserId);
 
             return PartialView("_InduvidualOrderDetails",orderDetailsViewModel);
+        }
+        public async Task<IActionResult> GetOrderStatus(int Id)
+        {
+            var orderHeader = await _db.OrderHeader.FirstOrDefaultAsync(m => m.Id == Id);
+             
+        
+
+            return PartialView("_OrderStatus", orderHeader);
         }
     }
 }
