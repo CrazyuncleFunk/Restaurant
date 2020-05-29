@@ -44,6 +44,11 @@ namespace Spice
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
+            services.AddAuthentication().AddFacebook(faceBookOptions =>
+            {
+                faceBookOptions.AppId = "251383852868911";
+                faceBookOptions.AppSecret = "72c4294735ed9edace146137f40f90c1";
+            });
 
             services.AddSession(options =>
             {
